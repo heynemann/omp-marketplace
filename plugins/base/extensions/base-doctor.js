@@ -20,7 +20,7 @@ const REQUIRED_PLUGINS = [
 const LOCKFILE = `${process.env.HOME}/.omp/plugins/omp-plugins.lock.json`;
 const PLUGINS_NM = `${process.env.HOME}/.omp/plugins/node_modules`;
 
-async function readLockfile() {
+export async function readLockfile() {
   try {
     return JSON.parse(await readFile(LOCKFILE, "utf8"));
   } catch {
@@ -28,7 +28,7 @@ async function readLockfile() {
   }
 }
 
-function pluginPresent(name, lock) {
+export function pluginPresent(name, lock) {
   if (!lock?.plugins?.[name]) return false;
   try {
     statSync(`${PLUGINS_NM}/${name}`);
@@ -62,16 +62,16 @@ async function installMissingPlugins(pi, ctx) {
       ctx?.ui?.notify?.(`base: installed ${req.spec}. Restart omp (or /reload-plugins) to activate.`, "info");
     } else {
       pi.logger?.warn?.(`base: failed to install ${req.spec}: ${res.out}`);
-      ctx?.ui?.notify?.(`base: failed to install ${req.spec}. Run: omp plugin install ${req.spec}`, "warning");
+      ctx?.ui?.notify?.(
+        `base: failed to install ${req.spec}. Run: omp plugin install ${req.spec}`,
+        "warning",
+      );
     }
   }
 }
 
 export default function baseDoctorExtension(pi) {
-  let lastCtx = null;
-
   pi.on("session_start", async (_event, ctx) => {
-    if (ctx) lastCtx = ctx;
     // Process-level guard: several sessions may rebind this factory.
     const G = globalThis;
     if (G.__ompBaseSetupDone) return;
@@ -86,8 +86,11 @@ export default function baseDoctorExtension(pi) {
       lines.push(`${ok ? "✔" : "✘"} ${label}${detail ? ` — ${detail}` : ""}`);
 
     // 1) envs
-    push(Boolean(process.env.OPENROUTER_API_KEY), "OPENROUTER_API_KEY",
-      process.env.OPENROUTER_API_KEY ? "set" : "missing — toolbar stays hidden");
+    push(
+      Boolean(process.env.OPENROUTER_API_KEY),
+      "OPENROUTER_API_KEY",
+      process.env.OPENROUTER_API_KEY ? "set" : "missing — toolbar stays hidden",
+    );
 
     // 2) required plugins
     const lock = await readLockfile();
@@ -104,7 +107,9 @@ export default function baseDoctorExtension(pi) {
         const shim = `${PLUGINS_NM}/.bin/hypa`;
         statSync(shim);
         hypaPath = shim;
-      } catch {}
+      } catch {
+        // shim not present — leave hypaPath null so the check reports "not found"
+      }
     }
     push(Boolean(hypaPath), "hypa binary", hypaPath || "not found — run: hypa init --agent omp");
 
@@ -113,7 +118,9 @@ export default function baseDoctorExtension(pi) {
     try {
       const skillsDir = fileURLToPath(new URL("../skills/", import.meta.url));
       skillCount = (await readdir(skillsDir)).length;
-    } catch {}
+    } catch {
+      // skills dir unreadable — skillCount stays 0 and the check reports it
+    }
     push(skillCount >= 79, "bundled skills", `${skillCount} skill dirs`);
 
     // 5) OpenRouter API reachability (only with a key)

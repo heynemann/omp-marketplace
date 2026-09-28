@@ -2,7 +2,7 @@
 
 Plugin marketplace for [omp](https://omp.sh).
 
-```
+```sh
 omp plugin marketplace add heynemann/heynemann
 omp plugin install base@heynemann
 ```
@@ -17,7 +17,7 @@ omp plugin install base@heynemann
 
 ## Layout
 
-```
+```text
 .omp-plugin/marketplace.json   # catalog
 plugins/base/                  # base plugin
 ```

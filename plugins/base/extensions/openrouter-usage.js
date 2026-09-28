@@ -14,14 +14,14 @@ const REFRESH_MS = 10 * 60 * 1000; // 10 min
 const CREDITS_URL = "https://openrouter.ai/api/v1/credits";
 const KEY_URL = "https://openrouter.ai/api/v1/key";
 
-function fmtUsd(v) {
+export function fmtUsd(v) {
   if (!Number.isFinite(v)) return "?";
   if (v >= 1000) return `$${(v / 1000).toFixed(1)}k`;
   if (v >= 100) return `$${Math.round(v)}`;
   return `$${v.toFixed(2)}`;
 }
 
-function pickMonthUsage(data) {
+export function pickMonthUsage(data) {
   // Prefer an explicit calendar-month number when the API grows one; fall
   // back to the key's reset-window monthly usage.
   for (const k of ["usage_month_calendar", "usage_monthly_calendar", "usage_month"]) {

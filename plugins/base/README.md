@@ -28,7 +28,7 @@ Base omp plugin: install once, get your full setup.
 
 ## Install
 
-```
+```sh
 omp plugin marketplace add heynemann/heynemann
 omp plugin install base@heynemann
 ```
@@ -43,7 +43,7 @@ Skills are vendored copies of their upstream repos. To refresh one: delete
 
 ## Layout
 
-```
+```text
 base/
   package.json                  # omp.extensions manifest
   extensions/openrouter-usage.js
