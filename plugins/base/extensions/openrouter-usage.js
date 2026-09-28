@@ -93,8 +93,7 @@ export default function openrouterUsageExtension(pi) {
     description: "Show OpenRouter spend and remaining credits now",
     handler: async (_args, ctx) => {
       await refresh(ctx);
-      const text = (ctx || lastCtx)?.ui?.setStatus && lastCtx ? "refreshed" : "refreshed";
-      ctx?.ui?.notify?.(`OpenRouter status ${text}.`, "info");
+      ctx?.ui?.notify?.("OpenRouter status refreshed.", "info");
     },
   });
 }
