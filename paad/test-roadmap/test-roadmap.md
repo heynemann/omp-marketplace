@@ -57,7 +57,7 @@ the doctor then skips installing plugins a fresh machine actually needs; `readLo
 returning `{plugins:{}}` on a missing/corrupt lockfile.
 Produces: plugins/base/tests/unit/base-doctor-presence.test.js
 Branch: test-roadmap
-Landed:
+Landed: 2026-09-28 207fb93 (negate condition: lock-entry guard; alter constant: lockfile fallback map)
 
 ## Phase 5: doctor() check aggregation
 
