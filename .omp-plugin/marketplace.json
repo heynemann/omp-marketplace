@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "heynemann",
+  "owner": {
+    "name": "heynemann"
+  },
+  "metadata": {
+    "description": "omp plugins by heynemann",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "base",
+      "description": "Base omp setup: OpenRouter spend toolbar, shared skills, MCP servers, and config defaults — install once, configure nothing.",
+      "version": "0.4.1",
+      "category": "productivity",
+      "keywords": ["openrouter", "toolbar", "cost", "base"],
+      "source": "./base"
+    }
+  ]
+}
