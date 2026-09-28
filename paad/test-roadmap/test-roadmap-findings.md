@@ -14,3 +14,5 @@ meant to render different messages.
 
 **Pinned by:** Phase 3 — its tests lock the refresh path's observable behavior; the handler text itself is not
 asserted, so fixing this does not turn a test red. Reconcile on touch.
+
+**Resolved:** df0b7d9 — ternary simplified to a constant notify string; suite 28/28 green, lint/format clean.
