@@ -66,4 +66,4 @@ Catches: the doctor skipping a check silently (env, bundled-skills count, hypa s
 failures so "all checks passed" prints over real failures.
 Produces: plugins/base/tests/integration/base-doctor-aggregation.test.js
 Branch: test-roadmap
-Landed:
+Landed: 2026-09-28 371195d (flip comparison: skills threshold >=79 to >79; negate condition: summary zero-failure guard)
