@@ -28,7 +28,7 @@ Catches: a threshold regression in `fmtUsd` (e.g. `>=1000` drifting to `>1000` o
 misfiring) that corrupts every status-bar dollar figure; non-finite values rendering as `$NaN` instead of `"?"`.
 Produces: plugins/base/tests/unit/openrouter-usage-fmt.test.js
 Branch: test-roadmap
-Landed:
+Landed: 2026-09-28 08f0dd5 (flip comparison >= to >; negate condition)
 
 ## Phase 2: pickMonthUsage precedence
 
