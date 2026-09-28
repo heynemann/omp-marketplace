@@ -1,9 +1,9 @@
 ---
-name: agent-authoring
+name: write-agent
 description: Use when creating, designing, or fixing an omp subagent (task agent) — triggers include "write an agent", "make me an agent", "create a subagent", agent `.md` definitions, and agents that misbehave when spawned via task.
 ---
 
-# Agent authoring
+# write-agent
 
 Turn a job into an omp task agent: grill the design, write the definition, smoke the spawn. Three steps, in order. Each ends on a completion criterion; do not advance early.
 

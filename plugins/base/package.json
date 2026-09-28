@@ -1,6 +1,6 @@
 {
   "name": "omp-plugin-base",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Base omp setup: OpenRouter spend toolbar, shared skills, MCP servers.",
   "license": "MIT",
   "omp": {
