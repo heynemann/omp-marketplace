@@ -37,7 +37,7 @@ Catches: a precedence reorder in `pickMonthUsage` that surfaces the per-key rese
 when a calendar-month field exists, or stops falling back to `null` when the API reports nothing usable.
 Produces: plugins/base/tests/unit/openrouter-usage-pick.test.js
 Branch: test-roadmap
-Landed:
+Landed: 2026-09-28 1d95793 (drop state transition: usage_month removed from priority loop; negate condition)
 
 ## Phase 3: refresh() status-text composition
 
