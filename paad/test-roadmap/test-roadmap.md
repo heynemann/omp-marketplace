@@ -47,7 +47,7 @@ the `Math.max(0, …)` clamp regressing to negative leftovers; a network/auth er
 instead of keeping it; a missing `OPENROUTER_API_KEY` failing to clear the status.
 Produces: plugins/base/tests/unit/openrouter-usage-refresh.test.js
 Branch: test-roadmap
-Landed:
+Landed: 2026-09-28 d8e123f (negate condition ×3: left-fallback guard, Math.max clamp constant, no-key guard ×2)
 
 ## Phase 4: base-doctor lockfile & plugin presence
 
