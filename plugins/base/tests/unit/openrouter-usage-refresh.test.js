@@ -45,24 +45,26 @@ afterEach(() => {
 });
 
 describe("refresh() status-text composition", () => {
-  it("shows monthly spend and the key limit remainder when both are known", async () => {
+  it("shows monthly spend and account balance when both are known", async () => {
     stubFetch([1000, 200], { usage_monthly: 44, limit_remaining: 60 });
     vi.stubEnv("OPENROUTER_API_KEY", "k");
     const pi = makePi();
     openrouterUsageExtension(pi);
     const ctx = makeCtx();
     await pi.handlers.session_start({}, ctx);
-    expect(ctx.calls.at(-1)).toEqual(["openrouter", "⚡ $44.00 this month • $60.00 left"]);
+    // "left" is the account balance (1000 - 200 = 800), not the key's
+    // limit_remaining (60) — the key quota resets and never reflects balance.
+    expect(ctx.calls.at(-1)).toEqual(["openrouter", "⚡ $44.00 this month • $800 left"]);
   });
 
-  it("falls back to lifetime credit math when limit_remaining is absent", async () => {
-    stubFetch([1000, 200], { usage_monthly: 44 });
+  it("falls back to the key limit remainder when the credits endpoint gives nothing", async () => {
+    stubFetch([undefined, undefined], { usage_monthly: 44, limit_remaining: 30 });
     vi.stubEnv("OPENROUTER_API_KEY", "k");
     const pi = makePi();
     openrouterUsageExtension(pi);
     const ctx = makeCtx();
     await pi.handlers.session_start({}, ctx);
-    expect(ctx.calls.at(-1)[1]).toBe("⚡ $44.00 this month • $800 left");
+    expect(ctx.calls.at(-1)[1]).toBe("⚡ $44.00 this month • $30.00 left");
   });
 
   it("shows only the monthly figure when neither limit nor lifetime data exists", async () => {

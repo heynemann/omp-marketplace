@@ -7,8 +7,9 @@
 //
 // The /key "usage_monthly" figure is per-key and tracks the key's reset
 // window, not the calendar month. When the key reports usage_monthly we show
-// it as "spent" and prefer limit_remaining for "left"; otherwise we fall back
-// to total_credits - total_usage (lifetime credits minus lifetime usage).
+// it as "this month"; "left" is always the account balance
+// (total_credits - total_usage), falling back to limit_remaining only when
+// the credits endpoint gave nothing usable.
 
 const REFRESH_MS = 10 * 60 * 1000; // 10 min
 const CREDITS_URL = "https://openrouter.ai/api/v1/credits";
@@ -63,11 +64,14 @@ export default function openrouterUsageExtension(pi) {
 
       let text;
       if (Number.isFinite(monthly)) {
-        const left = Number.isFinite(limitRemaining)
-          ? limitRemaining
-          : Number.isFinite(totalCredits) && Number.isFinite(totalUsage)
+        // "left" is the account balance; the key's limit_remaining is only a
+        // fallback when the credits endpoint gave nothing usable.
+        const left =
+          Number.isFinite(totalCredits) && Number.isFinite(totalUsage)
             ? Math.max(0, totalCredits - totalUsage)
-            : null;
+            : Number.isFinite(limitRemaining)
+              ? limitRemaining
+              : null;
         text = `⚡ ${fmtUsd(monthly)} this month`;
         if (Number.isFinite(left)) text += ` • ${fmtUsd(left)} left`;
       } else if (Number.isFinite(totalCredits) && Number.isFinite(totalUsage)) {
